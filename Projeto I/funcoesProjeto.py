@@ -1,5 +1,7 @@
 import time
 
+#Arquivo com os "Banco de Dados" do programa e suas funções
+
 #Tempo e limpeza de Tela
 def limparTela(segundos): 
   time.sleep(segundos)
@@ -61,11 +63,10 @@ opcaoForca = "forca"
 opcaoPerguntas = "perguntas"
 quantErrosMaximo = 6
 
-#Variaveis para funcionamento do codigo
+#Variaveis para funcionamento do codigo (Não alterar)
 boleano = True
 numeroPalavra = 0
 opcao = "inicio"
-#correto = 0
 finalPrograma = "s"
 letrasDigitadas = []
 
@@ -224,28 +225,31 @@ def cadastroPerguntas():
   saida = "s"
   limparTela(0)
   while (saida == 's' or saida == 'S'):
-    print(" - Cadastro de perguntas - \n")
-    novoNivel = str(input("Informe o nível da pergunta, 1 para Facil, 2 para Médio e 3 para Difícil"))
+    print("{0}{1}{3}                        - Cadastro de perguntas -                          {2}{2}{2}\n".format(fdCiano, ltPreto, finalCor, ltNegrito))
+    novoNivel = str(input("Informe o nível da pergunta, 1 para Facil, 2 para Médio e 3 para Difícil\n"))
     niveisLegiveis = ["1", "2", "3"]
     if novoNivel in niveisLegiveis:
-      novaPergunta = str(input("Informe a nova pergunta:"))
-      novaAlternativaA = str(input("Informe a resposta para a alternativa A:"))
-      novaAlternativaB = str(input("Informe a resposta para a alternativa B:"))
-      novaAlternativaC = str(input("Informe a resposta para a alternativa C:"))
-      novaAlternativaD = str(input("Informe a resposta para a alternativa D:"))
-      novaResposta = str(input("Informe qual é a alternativa correta para a sua pergunta:"))
+      novaPergunta = str(input("Informe a nova pergunta:\n"))
+      novaAlternativaA = str(input("Informe a resposta para a alternativa A:\n"))
+      novaAlternativaB = str(input("Informe a resposta para a alternativa B:\n"))
+      novaAlternativaC = str(input("Informe a resposta para a alternativa C:\n"))
+      novaAlternativaD = str(input("Informe a resposta para a alternativa D:\n"))
+      novaResposta = str(input("Informe qual é a alternativa correta para a sua pergunta:\n"))
       print('''
 Se você realmente deseja cadastrar as informações a baixo, digite (ok)
 
 Nível: {}
 Pergunta: {}
+
 Alternativa A: {}
 Alternativa B: {}
 Alternativa C: {}
 Alternativa D: {}
+
 Resposta Correta: {}
     '''.format(novoNivel, novaPergunta, novaAlternativaA, novaAlternativaB, novaAlternativaC, novaAlternativaD, novaResposta))
       cadastro = input(opcaoBranco)
+      #Se digitado 'ok' adiciona as perguntas novas no seu nivel informado
       if (cadastro == "ok" or cadastro == "OK"):
         if novoNivel == "1":
           perguntasF[len(perguntasF)+1] = [novaPergunta.upper(), novaAlternativaA.upper(), novaAlternativaB.upper(), novaAlternativaC.upper(), novaAlternativaD.upper(), novaResposta.upper()]
@@ -253,13 +257,14 @@ Resposta Correta: {}
           perguntasM[len(perguntasM)+1] = [novaPergunta.upper(), novaAlternativaA.upper(), novaAlternativaB.upper(), novaAlternativaC.upper(), novaAlternativaD.upper(), novaResposta.upper()]
         elif novoNivel == "3":
           perguntasD[len(perguntasD)+1] = [novaPergunta.upper(), novaAlternativaA.upper(), novaAlternativaB.upper(), novaAlternativaC.upper(), novaAlternativaD.upper(), novaResposta.upper()]
-        print("Perguntas e Respostas foram cadastradas com sucesso!\n")
+        print("\nPerguntas e Respostas foram cadastradas com sucesso!\n")
       else: 
-        print("Perguntas e Respostas não cadastradas")
-      #Pergunta se deseja cadastrar mais palavras na lista
+        print("\nPerguntas e Respostas não cadastradas")
+      #Pergunta se deseja cadastrar mais perguntas
       saida = str(input("Deseja cadastrar uma nova pergunta? \nS ou s para (Sim) ou qualquer outra letra para (Não)"))
       limparTela(0)
     else:
+      #Erro caso não seja informado um nivel diferente dos disponiveis
       print("Por favor, informe o nivel correto")
       limparTela(3)
 
@@ -270,10 +275,13 @@ def porcAcertos(acertos, respondidas, operador):
   #Imprimi na tela uma barra colorida de acordo com o percentual de acerto 
   porcentagemAcerto = int((acertos * 100)/operador)
   print('Seu Percentual de acerto foi de {0:.2f} % '.format(porcentagemAcerto))
+  #Caso tenha acertado menos de 50% barra vermelha
   if (porcentagemAcerto < 50):
     print(('\033[41m'+' '+'\033[0;0m') * int(porcentagemAcerto/2))
+  #Caso tenha acertado mais de 50% e menos de 70% barra amarela
   elif (porcentagemAcerto >= 50 and porcentagemAcerto <= 70):
     print(('\033[43m'+' '+'\033[0;0m') * int(porcentagemAcerto/2))
+  #Caso tenha acertado mais de 70% barra verde
   elif (porcentagemAcerto > 70):
     print(('\033[42m'+' '+'\033[0;0m') * int(porcentagemAcerto/2))
   limparTela(3)

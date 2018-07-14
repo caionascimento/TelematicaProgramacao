@@ -1,3 +1,4 @@
+#Import das funções
 from funcoesProjeto import *
 import random
 import time
@@ -7,17 +8,17 @@ while (opcao != opcaoEncerrar):
   #Chama a função do Menu
   menu()
   opcao = input(opcaoBranco)
-  #Chama a função de cadastro de palavras (senha: admin123)
+  #Chama a função de cadastro de palavras
   if (opcao == opcaoSuporte):
     while boleano:
       limparTela(0)
       print('''
-Bem Vindo a área de Suporte ao Programa
+{0}{1}{3}                 Bem Vindo a área de Suporte ao Programa                    {2}{2}{2}
 
-Digite 1 para realizar um cadastro de palavra no Jogo da Forca
-Digite 2 para realizar um cadastro de pergunta no Jogo das Perguntas
-Digite {} para sair da área de suporte
-'''.format(opcaoEncerrar))
+{0}{1}{3} Digite 1 para realizar um cadastro de palavra no Jogo da Forca             {2}{2}{2}
+{0}{1}{3} Digite 2 para realizar um cadastro de pergunta no Jogo das Pergunta        {2}{2}{2}
+{0}{1}{3} Digite {4} para sair da área de suporte                                   {2}{2}{2}
+'''.format(fdCiano, ltPreto, finalCor, ltNegrito, opcaoEncerrar))
       opcao = input(opcaoBranco)
       if opcao == '1':
         limparTela(0)
@@ -150,22 +151,28 @@ Digite S ou s para (Sim) ou qualquer outra letra para (Não)\n'''.format("".join
     #Inicia um Loop passando por todas as perguntas cadastradas no dicionario
     limparTela(0)
     while True:
+      #Chama funções regras das perguntas
       regrasPerguntas()
       tresOpcoes = ['1', '2', '3']
       opcao = input(opcaoBranco)
+      #Caso seja digitado o valor de saida, encerra o jogo
       if opcao == opcaoEncerrar:
         opcao = 1
         limparTela(0)
         break
+      #Valida se o nivel informado é valido
       elif opcao not in tresOpcoes:
         print("\nPor favor, passe uma opção valida!")
         limparTela(3)
       else:
+        #Inicio do jogo das perguntas Facil
         while True:
           if opcao == '1':
             acertos, erros, respondidas = 0, 0, 0
+            #Realiza a mistura das perguntas
             a = list(range(1,len(perguntasF)+1))
             random.shuffle(a)
+            #Seleciona o numero da perguntas disponivel na lista a
             for numPerg in a:
               while boleano:
                 limparTela(0)
@@ -181,10 +188,12 @@ Digite S ou s para (Sim) ou qualquer outra letra para (Não)\n'''.format("".join
                 if resposta == opcaoEncerrar:
                   limparTela(0)
                   break
+                #Testa se o valor informado equivale as opções validas (A,B,C ou D) e se é apenas uma letra informada
                 if resposta.upper() not in opcoesValidasAltern or len(resposta) > 1:
                   print("\nPor Favor, informe apenas uma letra valida")
                   limparTela(3)
                 else:
+                  #Compara a resposta com o gabarito correto
                   if (resposta.upper() == (perguntasF[numPerg][5])):
                     acertos = acertos + 1
                     respondidas = respondidas + 1
@@ -194,8 +203,11 @@ Digite S ou s para (Sim) ou qualquer outra letra para (Não)\n'''.format("".join
                   break
               if resposta == opcaoEncerrar:
                 break
+            #Chama função dos acertos
             porcAcertos(acertos, respondidas, len(perguntasF))
             opcao = '2'
+          #Inicio do jogo das perguntas Médio
+          #A base para o codigo do nivel Médio e Dificil é o mesmo do nivel Facíl
           elif opcao == '2':
             acertos, erros, respondidas = 0, 0, 0
             a = list(range(1,len(perguntasM)+1))
@@ -211,7 +223,6 @@ Digite S ou s para (Sim) ou qualquer outra letra para (Não)\n'''.format("".join
                 print('D) %s \n' % perguntasM[numPerg][4])
                 print('Qual a resposta correta? A B C ou D?\n')
                 resposta = input(respostaBranco)
-                #Grava quantas perguntas foram respondidas pelo usuario
                 if resposta == opcaoEncerrar:
                   limparTela(0)
                   break
@@ -230,6 +241,8 @@ Digite S ou s para (Sim) ou qualquer outra letra para (Não)\n'''.format("".join
                 break
             porcAcertos(acertos, respondidas, len(perguntasM))
             opcao = '3'
+          #Inicio do jogo das perguntas Difícil
+          #A base para o codigo do nivel Médio e Dificil é o mesmo do nivel Facíl
           elif opcao == '3':
             acertos, erros, respondidas = 0, 0, 0
             a = list(range(1,len(perguntasD)+1))
@@ -245,7 +258,6 @@ Digite S ou s para (Sim) ou qualquer outra letra para (Não)\n'''.format("".join
                 print('D) %s \n' % perguntasD[numPerg][4])
                 print('Qual a resposta correta? A B C ou D?\n')
                 resposta = input(respostaBranco)
-                #Grava quantas perguntas foram respondidas pelo usuario
                 if resposta == opcaoEncerrar:
                   limparTela(0)
                   break
@@ -266,7 +278,7 @@ Digite S ou s para (Sim) ou qualquer outra letra para (Não)\n'''.format("".join
             break
   #Opção do menu que encerra todo o programa
   elif(opcao == opcaoEncerrar):
-    print("\nEncerramento da aplicação")
+    print("\nEncerramento da aplicação\n")
   #Caso usuario digite qualquer outra coisa sem ser as opções informadas, pula 80 linhas e retorna para o menu
   else:
     limparTela(0)
